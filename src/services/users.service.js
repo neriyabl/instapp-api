@@ -1,9 +1,14 @@
 import { users } from "../../data/users.js";
 import { getChatDTO } from "./chats.service.js";
-export const getUserDTO = (id) => ({ id: users[id].id, name: users[id].name });
 
 export const getUsers = () => {
   return { ...users };
+};
+
+export const getUserDTO = (uid) => {
+  const users = getUsers();
+  const { id, img, name } = users[uid];
+  return { id, img, name };
 };
 
 export const getUser = (id) => {
