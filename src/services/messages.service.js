@@ -12,3 +12,16 @@ export const getMessage = (id) => {
   const message = { ...messages[id] };
   return message;
 };
+
+export const addMessage = ({ author, content }) => {
+  const id = messages.length + 1;
+  const timestemp = Date.now();
+  const message = {
+    id,
+    author,
+    content,
+    timestemp,
+  };
+  messages.push(message);
+  return message;
+};
