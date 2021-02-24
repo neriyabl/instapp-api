@@ -1,6 +1,5 @@
 import { users } from "../../data/users.js";
 import { getChatDTO } from "./chats.service.js";
-import from "../../main"
 
 export const getUsers = () => {
   return { ...users };

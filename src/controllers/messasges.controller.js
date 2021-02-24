@@ -1,6 +1,6 @@
 import express from "express";
-import { addMessageToChat } from "../services/chats.service";
-import { addMessage } from "../services/messages.service";
+import { addMessageToChat } from "../services/chats.service.js";
+import { addMessage } from "../services/messages.service.js";
 const router = express.Router();
 
 router.post("/", (req, res) => {
