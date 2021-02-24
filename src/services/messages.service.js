@@ -14,7 +14,7 @@ export const getMessage = (id) => {
 };
 
 export const addMessage = ({ author, content }) => {
-  const id = messages.length + 1;
+  const id = Object.keys(messages).length + 1;
   const timestemp = Date.now();
   const message = {
     id,
@@ -22,6 +22,6 @@ export const addMessage = ({ author, content }) => {
     content,
     timestemp,
   };
-  messages.push(message);
+  messages[message.id] = message;
   return message;
 };

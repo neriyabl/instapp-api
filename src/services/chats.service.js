@@ -30,10 +30,10 @@ export const getChat = (id) => {
 };
 
 export const addMessageToChat = (chatId, messageId) => {
-  if (!Object.keys(chats).includes(chatId)) {
+  if (!Object.keys(chats).includes(`${chatId}`)) {
     throw `Chat with id ${chatId} doesn't exist`;
   }
-  if (!Object.keys(getMessages()).includes(messageId)) {
+  if (!Object.keys(getMessages()).includes(`${messageId}`)) {
     throw `Message with id ${messageId} doesn't exist`;
   }
   chats[chatId].messages.push(messageId);
