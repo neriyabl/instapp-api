@@ -1,22 +1,36 @@
 import { users } from "../../data/users.js";
 import { getChatDTO } from "./chats.service.js";
+import { model } from "mongoose";
+import { UserDtoFields, UserSchema } from "../models/users.model";
 
-export const getUsers = () => {
-  return { ...users };
+const User = model("User", UserSchema);
+
+export const getUsers = async () => {
+  return await User.find();
 };
 
-export const getUserDTO = (uid) => {
-  const users = getUsers();
-  const { id, img, name } = users[uid];
-  return { id, img, name };
+export const getUser = async (id) => {
+  const user = await User.findById(id).populate({
+    path: "chats",
+    populate: {
+      path: "members",
+      model: "User",
+      select: UserDtoFields,
+    },
+  });
+  return user;
 };
 
-export const getUser = (id) => {
-  const users = getUsers();
-  if (!Object.keys(users).includes(id)) {
-    throw `User with id ${id} doesn't exist`;
-  }
-  const user = { ...users[id] };
-  user.chats = user.chats.map(getChatDTO);
+export const getUserDTO = async (id) => {
+  return await User.findById(id, UserDtoFields);
+};
+
+export const getUserByUserName = async (userName) => {
+  return await User.findOne({ name: userName });
+};
+
+export const createUser = async (userDto) => {
+  const user = new User(userDto);
+  await user.save();
   return user;
 };

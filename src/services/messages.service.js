@@ -1,27 +1,33 @@
+import { model } from "mongoose";
 import { messages } from "../../data/messages.js";
+import { MessageSchema } from "../models/messages.model";
+import { UserDtoFields } from "../models/users.model.js";
 
-export const getMessages = () => {
-  return { ...messages };
+const Message = model("Message", MessageSchema);
+
+export const getMessages = async () => {
+  return await Message.find();
 };
 
-export const getMessage = (id) => {
-  const messages = getMessages();
-  if (!Object.keys(messages).includes(id)) {
+export const getMessage = async (id) => {
+  const message = await Message.findById(id);
+  if (!message) {
     throw `Message with id ${id} doesn't exist`;
   }
-  const message = { ...messages[id] };
+  message.populate({
+    path: "author",
+    select: UserDtoFields,
+  });
   return message;
 };
 
-export const addMessage = ({ author, content }) => {
-  const id = Object.keys(messages).length + 1;
+export const addMessage = async ({ author, content, chat }) => {
   const timestemp = Date.now();
-  const message = {
-    id,
+  const message = new Message({
     author,
     content,
     timestemp,
-  };
-  messages[message.id] = message;
+  });
+  await message.save();
   return message;
 };

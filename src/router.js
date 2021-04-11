@@ -1,7 +1,7 @@
 import express from "express";
-import usersController from "./controllers/users.controller.js";
-import chatsController from "./controllers/chats.controller.js";
-import messagesController from "./controllers/messasges.controller.js";
+import usersController from "./controllers/users.controller";
+import chatsController from "./controllers/chats.controller";
+import messagesController from "./controllers/messasges.controller";
 const router = express.Router();
 
 router.get("/", (req, res) => {
